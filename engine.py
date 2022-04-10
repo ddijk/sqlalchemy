@@ -19,8 +19,9 @@ with engine.connect() as conn:
     conn.commit()
 
 
-with engine.connect() as conn:
-    result = conn.execute(
-        text("SELECT x, y FROM some_table WHERE y > :y"), {"y": 2})
+
+stmt = text("SELECT x, y FROM some_table WHERE y > :y ORDER BY x, y").bindparams(y=6)
+with Session(engine) as session:
+    result = session.execute(stmt)
     for row in result:
-        print(f"x: {row.x}  y: {row.y}")
+       print(f"x: {row.x}  y: {row.y}")
