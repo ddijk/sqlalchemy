@@ -18,10 +18,10 @@ with engine.connect() as conn:
     )
     conn.commit()
 
+stmt = text("SELECT * from some_table where y> :y").bindparams(y=6)
 
-
-stmt = text("SELECT x, y FROM some_table WHERE y > :y ORDER BY x, y").bindparams(y=6)
 with Session(engine) as session:
     result = session.execute(stmt)
+
     for row in result:
-       print(f"x: {row.x}  y: {row.y}")
+        print(f'x is {row.x} and y = {row.y}')
