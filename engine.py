@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy import text
+from sqlalchemy import text, Column, Integer
 from sqlalchemy.orm import Session
 engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, future=True)
 
@@ -18,10 +18,11 @@ with engine.connect() as conn:
     )
     conn.commit()
 
-stmt = text("SELECT * from some_table where y> :y").bindparams(y=6)
+stmt = text("SELECT x from some_table where y> :y").bindparams(y=6)
 
+#id = Column(Integer, primary_key=True, nullable=False, name='x')
 with Session(engine) as session:
-    result = session.execute(stmt)
+    result = session.query(id).all()
 
     for row in result:
-        print(f'x is {row.x} and y = {row.y}')
+        print(f'x is {row} ')
