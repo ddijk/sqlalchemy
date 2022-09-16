@@ -20,10 +20,18 @@ engine = create_engine(MAIN_DB_URL)
 Session = sessionmaker(bind=engine)
 
 
+unread_notifications = []
+columns = [User.id, User.name, User.fullname]
 with Session() as session:
 # main_db_metadata = MetaData()
 
-    result = session.query(User.fullname).all()
+    result = session.query(*columns).all()
+
+    print(f'type van res is: {type(result)}')
+    print(f'type van res item is: {type(result[0])}')
 
     for row in result:
         print(row)
+
+    unread_notifications.extend(result)
+    print('unread: ', unread_notifications)
