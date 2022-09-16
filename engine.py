@@ -21,8 +21,8 @@ with engine.connect() as conn:
 stmt = text("SELECT x from some_table where y> :y").bindparams(y=6)
 
 #id = Column(Integer, primary_key=True, nullable=False, name='x')
-with Session(engine) as session:
-    result = session.query(id).all()
+with engine.connect() as conn:
+    result = conn.execute(stmt)
 
     for row in result:
         print(f'x is {row} ')
