@@ -36,4 +36,6 @@ class Address(Base):
     def __repr__(self):
         return f"Address(id={self.id!r}, email_address={self.email_address!r})"
 
+print('About to create tables')
 Base.metadata.create_all(engine)
+print('Done creat tables')

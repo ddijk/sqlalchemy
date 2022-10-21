@@ -28,7 +28,10 @@ with Session() as session:
     result = session.query(*columns).all()
 
     print(f'type van res is: {type(result)}')
-    print(f'type van res item is: {type(result[0])}')
+    num = len(result)
+    print(f'Aantal rows is {num}')
+    if num:
+        print(f'type van res item is: {type(result[0])}')
 
     for row in result:
         print(row)
