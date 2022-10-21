@@ -13,8 +13,6 @@ def print_it(result):
     print(f'type van res is: {type(result)}')
     num = len(result)
     print(f'Aantal rows is {num}')
-    if num:
-        print(f'type van res item is: {type(result[0])}')
 
     for row in result:
         print(row)
@@ -32,15 +30,17 @@ Session = sessionmaker(bind=engine)
 
 
 unread_notifications = []
-columns = [User.id, User.name, User.fullname]
+columns = [User.id]
 whereClause1 = User.id.in_([3,4])
-whereClause2 = User.id.in_([5,6,7])
+
+my_ids = {1, 2, 3, 4, 5}
+print(f'my_ids is {my_ids}')
 with Session() as session:
 # main_db_metadata = MetaData()
 
     
     result1 = session.query(*columns).filter(whereClause1).all()
-    print_it(result1)
-    result2 = session.query(*columns).filter(whereClause2).all()
-    print_it(result2)
+    recent_user_ids = {row.id for row in result1}
+    my_ids -= recent_user_ids
+    print_it(my_ids)
 
